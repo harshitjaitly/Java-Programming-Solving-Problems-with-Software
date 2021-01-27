@@ -1,13 +1,11 @@
 
 /**
- * Write a description of Part1 here.
+ * Write a description of Part2 here.
  * 
  * @author (your name) 
  * @version (a version number or a date)
  */
-
-public class Part1 {
-    
+public class Part2 {
     public String findSimpleGene(String dna){
         // takes input of a DNA String
         String result = "" ; //declaring an empty string
@@ -39,4 +37,5 @@ public class Part1 {
         System.out.println("DNA = "+case_4+ ", Gene = "+findSimpleGene(case_4));
         System.out.println("DNA = "+case_5+ ", Gene = "+findSimpleGene(case_5));
     }
+
 }
