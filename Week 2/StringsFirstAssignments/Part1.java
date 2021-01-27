@@ -33,10 +33,12 @@ public class Part1 {
         String case_3 = "ACGTGCCAATCA" ;
         String case_4 = "ATGTGCCAATAA" ;
         String case_5 = "ATGTGCCATAAC" ;
+        String Quiz = "AAATGCCCTAACTAGATTAAGAAACC" ;
         System.out.println("DNA = "+case_1+ ", Gene = "+findSimpleGene(case_1));
         System.out.println("DNA = "+case_2+ ", Gene = "+findSimpleGene(case_2));
         System.out.println("DNA = "+case_3+ ", Gene = "+findSimpleGene(case_3));
         System.out.println("DNA = "+case_4+ ", Gene = "+findSimpleGene(case_4));
         System.out.println("DNA = "+case_5+ ", Gene = "+findSimpleGene(case_5));
+        System.out.println("DNA = "+Quiz+ ", Gene = "+findSimpleGene(Quiz));
     }
 }
