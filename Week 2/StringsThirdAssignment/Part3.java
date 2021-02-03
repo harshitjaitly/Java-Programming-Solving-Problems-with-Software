@@ -7,6 +7,16 @@ import edu.duke.*;
  */
 public class Part3 
 {
+    public int countCTG(String dna)
+    {
+        int count = 0 ;
+        while(dna.indexOf("CTG") != -1)
+        {
+            count++ ;
+            dna = dna.substring(dna.indexOf("CTG")+3);
+        }
+        return count ;
+    }
     public int findStopCodon (String dna, int startIndex, String stopCodon) 
     {
         int stopIndex = dna.indexOf(stopCodon, startIndex+3) ;
@@ -120,18 +130,18 @@ public class Part3
         // }
         // processGenes(genes_test) ;
         StorageResource gene_storage_quiz = new StorageResource();
-        FileResource fr = new FileResource("dna/brca1line.fa");
+        FileResource fr = new FileResource("dna/GRch38dnapart.fa");
         String dna_quiz = fr.asString().toUpperCase();
         System.out.println("DNA = "+dna_quiz) ;
         gene_storage_quiz = getAllGenes(dna_quiz) ;
         int count_Genes_quiz = 0 ;
         for(String s: gene_storage_quiz.data())
         {
-            System.out.println("Gene Found = "+s);
+            // System.out.println("Gene Found = "+s);
             count_Genes_quiz++;
         }
         System.out.println("Total Genes Found = "+count_Genes_quiz);
         processGenes(gene_storage_quiz);
-
+        System.out.println("CTG codon count : "+countCTG(dna_quiz));
     }
 }
