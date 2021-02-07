@@ -54,7 +54,7 @@ public class ExportData
             String export = record.get("Exports") ;
             if(record.get("Value (dollars)").length() > amount.length())
             {
-                System.out.println(record.get("Country") + "Export Value : " + record.get("Value (dollars)"));
+                System.out.println(record.get("Country") + ", Export Value : " + record.get("Value (dollars)"));
             }
         }
     }
