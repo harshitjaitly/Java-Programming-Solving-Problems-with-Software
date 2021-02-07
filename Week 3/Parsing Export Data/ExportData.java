@@ -58,6 +58,6 @@ public class ExportData
         listExporterTwoProducts(parser, "gold", "diamonds") ;
         
         parser = fr.getCSVParser() ;
-        numberOfExporters(parser, "gold") ;
+        numberOfExporters(parser, "sugar") ;
     }
 }
