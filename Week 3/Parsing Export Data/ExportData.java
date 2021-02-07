@@ -45,7 +45,7 @@ public class ExportData
                 exportCount++;
             }
         }
-        System.out.println("")
+        System.out.println("Number of countries exporting "+"exportitem :"+exportCount);
     }    
     public void tester()
     {
