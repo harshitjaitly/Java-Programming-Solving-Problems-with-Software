@@ -46,18 +46,32 @@ public class ExportData
             }
         }
         System.out.println("Number of countries exporting " + exportitem + " : " + exportCount);
-    }    
+    }
+    public void bigExporters(CSVParser parser, String amount)
+    {
+        for(CSVRecord record : parser)
+        {
+            String export = record.get("Exports") ;
+            if(record.get("Value (dollars)").length() > amount.length())
+            {
+                System.out.println(record.get("Country") + "Export Value : " + record.get("Value (dollars)"));
+            }
+        }
+    }
     public void tester()
     {
         FileResource fr = new FileResource() ;
         
         CSVParser parser = fr.getCSVParser() ;
-        countryInfo(parser, "Germany") ;
+        countryInfo(parser, "Nauru") ;
         
         parser = fr.getCSVParser() ;
         listExporterTwoProducts(parser, "gold", "diamonds") ;
         
         parser = fr.getCSVParser() ;
         numberOfExporters(parser, "sugar") ;
+        
+        parser = fr.getCSVParser() ;
+        bigExporters(parser, "$999,999,999,999") ;
     }
 }
