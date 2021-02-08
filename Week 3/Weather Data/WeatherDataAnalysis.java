@@ -25,32 +25,33 @@ public class WeatherDataAnalysis
         }
         return coldest_Record ;
     }
-    public void fileWithColdestTemperature()
+    public String fileWithColdestTemperature()
     {
+        File coldest_Day = null ;
         DirectoryResource dr = new DirectoryResource() ;
-        File coldestFile = null ;
-        CSVParser coldest_Parser = null ;
+        CSVRecord coldest = null ;
         for(File f: dr.selectedFiles())
         {
             FileResource fr = new FileResource(f) ;
-            CSVParser parser = fr.getCSVParser() ;            
-            if(coldestFile == null)
+            CSVParser parser = fr.getCSVParser() ;
+            CSVRecord current = coldestHourInFile(parser) ;
+            if(coldest == null)
             {
-                coldestFile = f;
-                coldest_Parser = parser ;
+                coldest = current ;
+                coldest_Day = f ;
             }
             else
             {
-                double current_Temp = Double.parseDouble(coldestHourInFile(parser).get("TemperatureF")) ;
-                double coldest_Temp = Double.parseDouble(coldestHourInFile(coldest_Parser).get("TemperatureF")) ;
+                double current_Temp = Double.parseDouble(current.get("TemperatureF")) ;
+                double coldest_Temp = Double.parseDouble(coldest.get("TemperatureF")) ;
                 if(current_Temp < coldest_Temp)
                 {
-                    coldestFile = f ;
-                    coldest_Parser = parser ;
+                    coldest = current ;
+                    coldest_Day = f ;
                 }
             }
         }
-        System.out.println(coldestFile.getName()) ;
+        return coldest_Day.getName() ;
     }
     public void testColdestHourInFile()
     {
@@ -58,6 +59,29 @@ public class WeatherDataAnalysis
         
         CSVParser parser = fr.getCSVParser() ;
         CSVRecord coldest_Record = coldestHourInFile(parser) ;
-        System.out.println("Time : " + coldest_Record.get("TimeEDT") + " Coldest_Temperature : " + coldest_Record.get("TemperatureF")) ;
+        System.out.println("Time : " + coldest_Record.get("TimeEST") + " Coldest_Temperature : " + coldest_Record.get("TemperatureF")) ;
+    }
+    public void printEachRecord(CSVParser parser)
+    {
+        System.out.println("\nFollowing are the Temperature details for the given Day") ;
+        for(CSVRecord record : parser)
+        {
+            System.out.println(record.get("DateUTC")+ " " + record.get("TemperatureF")) ;
+        }
+    }
+    public void testFileWithColdestTemperature()
+    {
+        String coldestFile = fileWithColdestTemperature() ;
+        System.out.println("Coldest Day was in File : " + coldestFile) ;
+        
+        String file_Path = "nc_weather/2014/"+coldestFile ;
+        
+        FileResource fr = new FileResource(file_Path) ;
+        CSVParser parser = fr.getCSVParser() ;
+        CSVRecord coldest_Record = coldestHourInFile(parser) ;
+        System.out.println("Coldest_Temperature on that day : " + coldest_Record.get("TemperatureF")) ;
+        
+        parser = fr.getCSVParser() ;
+        printEachRecord(parser) ;   
     }
 }
