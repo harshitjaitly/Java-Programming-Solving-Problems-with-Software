@@ -1,10 +1,10 @@
+import org.apache.commons.csv.*;
+import edu.duke.* ;
 
-/**
- * Write a description of WeatherDataAnalysis here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
-public class WeatherDataAnalysis {
-
+public class WeatherDataAnalysis 
+{
+    public CSVRecord coldesHourInFile(CSVParser parser)
+    {
+        for(CSVRecord record : parser)
+    }
 }
