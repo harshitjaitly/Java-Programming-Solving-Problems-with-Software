@@ -69,6 +69,56 @@ public class WeatherDataAnalysis
             System.out.println(record.get("DateUTC")+ " " + record.get("TemperatureF")) ;
         }
     }
+    public CSVRecord lowestHumidityInFile(CSVParser parser)
+    {
+        CSVRecord lowestRecord = null ;
+        for(CSVRecord current_Record : parser)
+        {
+            if(current_Record.get("Humidity") == "N/A")
+            {
+                continue;
+            }
+            else if(lowestRecord == null)
+            {
+                lowestRecord = current_Record ;
+            }
+            else
+            {
+                double current_humidity = Double.parseDouble(current_Record.get("Humidity")) ;
+                double lowest_humidity = Double.parseDouble(lowestRecord.get("Humidity")) ;
+                if(current_humidity < lowest_humidity)
+                {
+                    lowestRecord = current_Record ;
+                }
+            }
+        }
+        return lowestRecord ;
+    }
+    public CSVRecord lowestHumidityInManyFiles()
+    {
+        DirectoryResource dr = new DirectoryResource() ;
+        CSVRecord lowestHumidity = null ;
+        for(File f: dr.selectedFiles())
+        {
+            FileResource fr = new FileResource(f) ;
+            CSVParser parser = fr.getCSVParser() ;
+            CSVRecord currentHumidity = lowestHumidityInFile(parser) ;
+            if(lowestHumidity == null)
+            {
+                lowestHumidity = currentHumidity ;
+            }
+            else
+            {
+                double current_Humid = Double.parseDouble(currentHumidity.get("Humidity")) ;
+                double lowest_Humid = Double.parseDouble(lowestHumidity.get("Humidity")) ;
+                if(current_Humid < lowest_Humid)
+                {
+                    lowestHumidity = currentHumidity ;
+                }
+            }
+        }
+        return lowestHumidity ;
+    }
     public void testFileWithColdestTemperature()
     {
         String coldestFile = fileWithColdestTemperature() ;
@@ -84,4 +134,23 @@ public class WeatherDataAnalysis
         parser = fr.getCSVParser() ;
         printEachRecord(parser) ;   
     }
+    public void testLowestHumidityInFile()
+    {
+        FileResource fr = new FileResource() ;
+        CSVParser parser = fr.getCSVParser() ;
+        CSVRecord lowestHumidity = lowestHumidityInFile(parser) ;
+        System.out.println("Time : " + lowestHumidity.get("DateUTC") + " Lowest Humidity : " + lowestHumidity.get("Humidity")) ;
+        
+        parser = fr.getCSVParser() ;
+        for(CSVRecord record : parser)
+        {
+            System.out.println("Time : " + record.get("DateUTC") + " Humidity : " + record.get("Humidity")) ;
+        }
+    }
+    public void testLowestHumidityInManyFiles()
+    {
+        CSVRecord lowestHumidity = lowestHumidityInManyFiles();
+        System.out.println(" Lowest Humidity : " + lowestHumidity.get("Humidity") + "Time : " + lowestHumidity.get("DateUTC")) ;
+    }
+        
 }
