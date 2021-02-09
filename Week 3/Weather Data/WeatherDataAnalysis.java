@@ -74,21 +74,20 @@ public class WeatherDataAnalysis
         CSVRecord lowestRecord = null ;
         for(CSVRecord current_Record : parser)
         {
-            if(current_Record.get("Humidity") == "N/A")
+            if(!current_Record.get("Humidity").equals("N/A"))
             {
-                continue;
-            }
-            else if(lowestRecord == null)
-            {
-                lowestRecord = current_Record ;
-            }
-            else
-            {
-                double current_humidity = Double.parseDouble(current_Record.get("Humidity")) ;
-                double lowest_humidity = Double.parseDouble(lowestRecord.get("Humidity")) ;
-                if(current_humidity < lowest_humidity)
-                {
+                if(lowestRecord == null)
+                {   
                     lowestRecord = current_Record ;
+                }
+                else
+                {
+                    double current_humidity = Double.parseDouble(current_Record.get("Humidity")) ;
+                    double lowest_humidity = Double.parseDouble(lowestRecord.get("Humidity")) ;
+                    if(current_humidity < lowest_humidity)
+                    {
+                        lowestRecord = current_Record ;
+                    }      
                 }
             }
         }
@@ -118,6 +117,20 @@ public class WeatherDataAnalysis
             }
         }
         return lowestHumidity ;
+    }
+    public double averageTempInFile(CSVParser parser)
+    {
+        double sum = 0 ;
+        int count = 0 ;
+        for(CSVRecord record : parser)
+        {
+            if(record.get("TemperatureF") != "-9999")
+            {
+                sum += Double.parseDouble(record.get("TemperatureF")) ;
+            }
+            count++ ;
+        }
+        return sum/count ;
     }
     public void testFileWithColdestTemperature()
     {
@@ -150,7 +163,7 @@ public class WeatherDataAnalysis
     public void testLowestHumidityInManyFiles()
     {
         CSVRecord lowestHumidity = lowestHumidityInManyFiles();
-        System.out.println(" Lowest Humidity : " + lowestHumidity.get("Humidity") + "Time : " + lowestHumidity.get("DateUTC")) ;
+        System.out.println(" Lowest Humidity : " + lowestHumidity.get("Humidity") + " Time : " + lowestHumidity.get("DateUTC")) ;
     }
         
 }
