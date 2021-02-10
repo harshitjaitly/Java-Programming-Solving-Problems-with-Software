@@ -66,10 +66,10 @@ public class ExportData
         countryInfo(parser, "Nauru") ;
         
         parser = fr.getCSVParser() ;
-        listExporterTwoProducts(parser, "gold", "diamonds") ;
+        listExporterTwoProducts(parser, "cotton", "flowers") ;
         
         parser = fr.getCSVParser() ;
-        numberOfExporters(parser, "sugar") ;
+        numberOfExporters(parser, "cocoa") ;
         
         parser = fr.getCSVParser() ;
         bigExporters(parser, "$999,999,999,999") ;

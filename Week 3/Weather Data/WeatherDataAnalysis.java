@@ -132,12 +132,26 @@ public class WeatherDataAnalysis
         }
         return sum/count ;
     }
+    public double averageTemperatureWithHighHumidityInFile (CSVParser parser, int value)
+    {
+        double sum = 0 ;
+        int count = 0 ;
+        for(CSVRecord record : parser)
+        {
+            if(!record.get("Humidity").equals("N/A") && Double.parseDouble(record.get("Humidity")) >= 80)
+            {
+                sum += Double.parseDouble(record.get("TemperatureF")) ;
+                count++;
+            }
+        }
+        return sum/count ;
+    }
     public void testFileWithColdestTemperature()
     {
         String coldestFile = fileWithColdestTemperature() ;
         System.out.println("Coldest Day was in File : " + coldestFile) ;
         
-        String file_Path = "nc_weather/2014/"+coldestFile ;
+        String file_Path = "nc_weather/2013/"+coldestFile ;
         
         FileResource fr = new FileResource(file_Path) ;
         CSVParser parser = fr.getCSVParser() ;
@@ -165,5 +179,25 @@ public class WeatherDataAnalysis
         CSVRecord lowestHumidity = lowestHumidityInManyFiles();
         System.out.println(" Lowest Humidity : " + lowestHumidity.get("Humidity") + " Time : " + lowestHumidity.get("DateUTC")) ;
     }
-        
+    public void testAverageTempInFile()
+    {
+        FileResource fr = new FileResource() ;
+        CSVParser parser = fr.getCSVParser() ;
+        double avg_Temp = averageTempInFile(parser) ;
+        System.out.println("Average Temperature in File : "+avg_Temp);
+    }
+    public void testAverageTemperatureWithHighHumidityInFile()
+    {
+        FileResource fr = new FileResource() ;
+        CSVParser parser = fr.getCSVParser() ;
+        double avg_Temp = averageTemperatureWithHighHumidityInFile(parser, 80) ;
+        if(avg_Temp > 0)
+        {
+            System.out.println("Average Temperature with High Humidity in File : "+avg_Temp);
+        }
+        else
+        {
+            System.out.println("No Temperature with that Humidity");
+        }
+    }
 }
