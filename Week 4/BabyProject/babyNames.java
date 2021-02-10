@@ -57,8 +57,8 @@ public class babyNames
     }
     public void testGetRank()
     {
-        int Year = 1960 ;
-        String name = "Emily" ;
+        int Year = 1971 ;
+        String name = "Frank" ;
         String gender = "F" ;
         int rank = getRank(Year, name, gender) ;
         System.out.println("Rank of Name : "+name+ ", in Year : "+ Year+ " = "+rank) ;
