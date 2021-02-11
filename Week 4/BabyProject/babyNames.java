@@ -112,6 +112,29 @@ public class babyNames
         }
         return -1 ;
     }
+    public int getTotalBirthsRankedHigher(int Year, String Name, String gender)
+    {
+        String f_name = "us_babynames_by_year/yob"+Integer.toString(Year)+".csv" ;
+        FileResource fr = new FileResource(f_name) ;
+        CSVParser parser = fr.getCSVParser(false) ;
+        int total_Births = 0 ;
+        
+        for(CSVRecord record : parser)
+        {
+            if(record.get(1).equals(gender))
+            {
+                if(record.get(0).equals(Name))
+                {
+                    return total_Births ;
+                }
+                else
+                {
+                    total_Births += Integer.parseInt(record.get(2)) ;
+                }
+            }
+        }
+        return total_Births ;
+    }
     public void testTotalBirths()
     {
         totalBirths() ; 
@@ -158,5 +181,13 @@ public class babyNames
         int endYear = 2014;
         double avgRank = getAverageRank(name, gender, startYear, endYear) ;
         System.out.println("Average Rank of Name : "+name+" equals : "+avgRank) ;
+    }
+    public void testGetTotalBirthsRankedHigher()
+    {
+        int Year = 1990;
+        String Name = "Drew" ;
+        String gender = "M" ;
+        int totalBirths = getTotalBirthsRankedHigher(Year,Name,gender) ;
+        System.out.println("Total Births Ranked Higher than "+Name+ " : "+totalBirths) ;
     }
 }
