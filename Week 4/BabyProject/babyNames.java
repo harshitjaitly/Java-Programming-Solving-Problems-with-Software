@@ -78,9 +78,24 @@ public class babyNames
         String newName = getName(newYear, originalRank, gender);
         System.out.println(name + " , Year : "+ year + " == "+ newName + " , Year : " + newYear) ;
     }
+    public int YearofHighestRank(String name, String gender, int startYear, int endYear)
+    {
+        int bestRank = getRank(startYear, name, gender);
+        int bestYear = startYear ;
+        for(int eachYear = startYear+1; eachYear<=endYear; eachYear++)
+        {
+            int newRank = getRank(eachYear, name, gender) ;
+            if(newRank < bestRank && newRank != -1)
+            {
+                bestRank = newRank ;
+                bestYear= eachYear ;
+            }
+        }
+        return bestYear ;
+    }
     public void testTotalBirths()
     {
-        totalBirths() ;
+        totalBirths() ; 
     }
     public void testGetRank()
     {
@@ -105,5 +120,15 @@ public class babyNames
         int newYear = 2014 ;
         String gender = "M" ;
         whatIsNameInYear(name, year, newYear, gender) ;
+    }
+    public void testYearOfHighestrank()
+    {
+        String name = "Mich" ;
+        String gender = "M" ;
+        int startYear = 1880 ;
+        int endYear = 2014 ;
+        
+        int bestYear= YearofHighestRank(name, gender, startYear, endYear);
+        System.out.println("Best Rank of "+name+" in Year : "+bestYear) ;
     }
 }
